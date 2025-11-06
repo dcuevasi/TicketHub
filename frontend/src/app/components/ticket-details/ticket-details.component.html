@@ -1,0 +1,50 @@
+<h2 mat-dialog-title>
+  <mat-icon>confirmation_number</mat-icon>
+  Ticket #{{ ticket.id }}
+</h2>
+
+<mat-dialog-content>
+  <div class="ticket-details">
+    <div class="detail-section">
+      <h3>{{ ticket.title }}</h3>
+      
+      <div class="chips-row">
+        <mat-chip-set>
+          <mat-chip [color]="getStatusColor(ticket.status)" highlighted>
+            {{ ticket.status || 'open' | statusLabel }}
+          </mat-chip>
+          <mat-chip [color]="getPriorityColor(ticket.priority)" highlighted>
+            Prioridad: {{ ticket.priority || 'medium' | statusLabel }}
+          </mat-chip>
+        </mat-chip-set>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <h4>Descripción</h4>
+      <p class="description">{{ ticket.description || 'No description provided.' }}</p>
+    </div>
+
+    <div class="detail-section">
+      <h4>Detalles</h4>
+      <div class="details-grid">
+        <div class="detail-item">
+          <span class="label">Creado:</span>
+          <span class="value">{{ ticket.created_at | date:'medium' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Actualizado:</span>
+          <span class="value">{{ ticket.updated_at | date:'medium' }}</span>
+        </div>
+        <div class="detail-item" *ngIf="ticket.due_date">
+          <span class="label">Fecha límite:</span>
+          <span class="value">{{ ticket.due_date | date:'short' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="close()">Close</button>
+</mat-dialog-actions>

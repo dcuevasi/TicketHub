@@ -1,0 +1,64 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Editar Ticket' : 'Crear Ticket' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="ticket-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Título</mat-label>
+      <input matInput formControlName="title" required maxlength="100" />
+      <mat-hint align="end">{{ form.get('title')?.value?.length || 0 }}/100</mat-hint>
+      <mat-error>{{ getErrorMessage('title') }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput formControlName="description" rows="4" maxlength="1000"></textarea>
+      <mat-hint align="end">{{ form.get('description')?.value?.length || 0 }}/1000</mat-hint>
+      <mat-error>{{ getErrorMessage('description') }}</mat-error>
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let status of statuses" [value]="status">
+            {{ status | statusLabel }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Prioridad</mat-label>
+        <mat-select formControlName="priority">
+          <mat-option *ngFor="let priority of priorities" [value]="priority">
+            {{ priority | statusLabel }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Fecha límite</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="due_date" required />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error>{{ getErrorMessage('due_date') }}</mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()" [disabled]="isSubmitting">
+    Cancelar
+  </button>
+  <button 
+    mat-raised-button 
+    color="primary" 
+    (click)="onSubmit()" 
+    [disabled]="form.invalid || isSubmitting">
+    <span *ngIf="!isSubmitting">{{ isEditMode ? 'Actualizar' : 'Crear' }}</span>
+    <span *ngIf="isSubmitting" class="loading-button">
+      <mat-spinner diameter="20"></mat-spinner>
+      {{ isEditMode ? 'Updating...' : 'Creating...' }}
+    </span>
+  </button>
+</mat-dialog-actions>

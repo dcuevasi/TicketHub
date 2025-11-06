@@ -1,0 +1,68 @@
+.ticket-details {
+  padding: 1rem 0;
+  min-width: 500px;
+  max-width: 600px;
+  overflow-wrap: break-word;
+}
+
+.detail-section {
+  margin-bottom: 2rem;
+
+  h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+
+  h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.chips-row {
+  margin-top: 0.5rem;
+}
+
+.description {
+  margin: 0;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.details-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detail-item {
+  display: flex;
+  gap: 1rem;
+
+  .label {
+    font-weight: 500;
+    min-width: 80px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .value {
+    color: rgba(0, 0, 0, 0.87);
+  }
+}
+
+h2 mat-icon {
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+
+mat-dialog-content {
+  max-height: 600px;
+  overflow-y: auto;
+}

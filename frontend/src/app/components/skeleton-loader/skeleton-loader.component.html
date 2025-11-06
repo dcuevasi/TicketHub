@@ -1,0 +1,29 @@
+<div class="skeleton-container" [ngClass]="type">
+  <!-- List Skeleton -->
+  <div class="skeleton-line" *ngIf="type === 'list'">
+    <div class="skeleton-avatar"></div>
+    <div class="skeleton-text">
+      <div class="skeleton-title"></div>
+      <div class="skeleton-subtitle"></div>
+    </div>
+  </div>
+  
+  <!-- Card Skeleton -->
+  <div class="skeleton-card" *ngIf="type === 'card'">
+    <div class="skeleton-card-header"></div>
+    <div class="skeleton-card-body">
+      <div class="skeleton-line-short"></div>
+      <div class="skeleton-line-medium"></div>
+      <div class="skeleton-line-long"></div>
+    </div>
+  </div>
+
+  <!-- Table Skeleton -->
+  <div class="skeleton-table" *ngIf="type === 'table'">
+    <div class="skeleton-row" *ngFor="let item of [1,2,3,4,5]">
+      <div class="skeleton-cell"></div>
+      <div class="skeleton-cell"></div>
+      <div class="skeleton-cell"></div>
+    </div>
+  </div>
+</div>
