@@ -1,0 +1,254 @@
+.dashboard-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dashboard-title {
+  font-size: 1.7rem;
+  font-weight: 500;
+  margin-bottom: 1.1rem;
+  color: rgba(0, 0, 0, 0.87);
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  gap: 1rem;
+
+  p {
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.dashboard-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+
+  @media (max-width: 500px) {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  gap: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+
+    mat-icon {
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
+      color: white;
+    }
+  }
+
+  .stat-info {
+    flex: 1;
+
+    h3 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin: 0;
+      color: rgba(0, 0, 0, 0.87);
+    }
+
+    p {
+      margin: 0.25rem 0 0 0;
+      color: rgba(0, 0, 0, 0.6);
+      font-size: 0.875rem;
+    }
+
+    .percentage {
+      display: inline-block;
+      margin-top: 0.25rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  &.total .stat-icon {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  &.open .stat-icon {
+    background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+  }
+
+  &.in-progress .stat-icon {
+    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+  }
+
+  &.closed .stat-icon {
+    background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+  }
+
+  &.urgent .stat-icon {
+    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+  }
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 1.5rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.chart-card {
+  mat-card-header {
+    margin-bottom: 1rem;
+  }
+
+  mat-card-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+
+  mat-card-content {
+    padding: 0 1rem 1rem 1rem;
+  }
+}
+
+.chart-container {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+
+.recent-tickets-card {
+  .recent-ticket {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.02);
+    }
+
+    .ticket-info {
+      flex: 1;
+
+      h4 {
+        margin: 0 0 0.25rem 0;
+        font-size: 1rem;
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.87);
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.875rem;
+        color: rgba(0, 0, 0, 0.6);
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+
+    .ticket-badges {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .status-badge,
+    .priority-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    .status-badge {
+      &.status-open {
+        background-color: #e3f2fd;
+        color: #1976d2;
+      }
+
+      &.status-in_progress {
+        background-color: #fff3e0;
+        color: #f57c00;
+      }
+
+      &.status-closed {
+        background-color: #e8f5e9;
+        color: #388e3c;
+      }
+    }
+
+    .priority-badge {
+      &.priority-urgent {
+        background-color: #ffebee;
+        color: #d32f2f;
+      }
+
+      &.priority-high {
+        background-color: #fff3e0;
+        color: #f57c00;
+      }
+
+      &.priority-medium {
+        background-color: #e3f2fd;
+        color: #1976d2;
+      }
+
+      &.priority-low {
+        background-color: #e8f5e9;
+        color: #388e3c;
+      }
+    }
+  }
+}

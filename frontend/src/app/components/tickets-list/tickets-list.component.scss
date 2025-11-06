@@ -1,0 +1,251 @@
+mat-card {
+  margin: 0;
+  border: 1.2px solid rgb(191, 191, 191);
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .header-actions {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+}
+
+.header-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+
+  .export-btn {
+    background: linear-gradient(135deg, #388e3c 20%, #4caf50 80%, #99cc33 100%) !important;
+    color: white !important;
+    transition: all 120ms ease-in-out !important;
+
+    &:hover {
+      background: linear-gradient(130deg, #2e7d32 0%, #45a049 50%, #8bc34a 100%) !important;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+.filters-section {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+
+  .search-field {
+    flex: 1;
+    min-width: 250px;
+  }
+
+  .filter-field {
+    min-width: 150px;
+  }
+
+  mat-form-field {
+    ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+
+    // Reducir la altura del campo
+    ::ng-deep .mat-mdc-text-field-wrapper {
+      padding-top: 4px;
+      padding-bottom: 4px;
+    }
+
+    ::ng-deep .mat-mdc-form-field-infix {
+      padding-top: 8px;
+      padding-bottom: 8px;
+      min-height: 20px;
+    }
+
+    // Ajustar posición del label flotante
+    ::ng-deep .mat-mdc-floating-label {
+      top: 23px;
+    }
+  }
+
+  .clear-filters-btn {
+    margin-top: -8px;
+    
+    mat-icon {
+      margin-right: 0.5rem;
+    }
+  }
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  gap: 1rem;
+}
+
+.loading-text {
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+
+  .empty-icon {
+    font-size: 80px;
+    width: 80px;
+    height: 80px;
+    color: rgba(0, 0, 0, 0.26);
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0 0 0.5rem 0;
+    color: rgba(0, 0, 0, 0.87);
+  }
+
+  p {
+    color: rgba(0, 0, 0, 0.6);
+    margin: 0 0 1.5rem 0;
+  }
+
+  button {
+    mat-icon {
+      margin-right: 0.5rem;
+    }
+  }
+}
+
+.tickets-table {
+  width: 100%;
+
+  @media (max-width: 768px) {
+    // Ocultar columnas en móvil
+    .mat-column-description {
+      display: none;
+    }
+  }
+}
+
+mat-paginator {
+  margin-top: 1rem;
+}
+
+.description-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.status-badge,
+.priority-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status-badge {
+  &.status-open {
+    background-color: #1976d2c8;
+    color: #ffffff;
+  }
+
+  &.status-in_progress {
+    background-color: #f59432cb;
+    color: #ffffff;
+  }
+
+  &.status-closed {
+    background-color: #388e3c;
+    color: #ffffff;
+  }
+}
+
+.priority-badge {
+  &.priority-low {
+    background-color: #99cc33;
+    color: #ffffff;
+  }
+
+  &.priority-medium {
+    background-color: #f2c100;
+    color: #ffffff;
+  }
+
+  &.priority-high {
+    background-color: #ff9966;
+    color: #ffffff;
+  }
+
+  &.priority-urgent {
+    background-color: #cc3300d6;
+    color: #ffffff;
+  }
+}
+
+::ng-deep .success-snackbar {
+  background-color: #4caf50 !important;
+  color: white !important;
+  
+  .mat-mdc-snack-bar-label {
+    color: white;
+  }
+
+  .mat-mdc-button {
+    color: white !important;
+  }
+}
+
+::ng-deep .error-snackbar {
+  background-color: #f44336 !important;
+  color: white !important;
+  
+  .mat-mdc-snack-bar-label {
+    color: white;
+  }
+
+  .mat-mdc-button {
+    color: white !important;
+  }
+}
+
+::ng-deep .info-snackbar {
+  background-color: #2196f3 !important;
+  color: white !important;
+  
+  .mat-mdc-snack-bar-label {
+    color: white;
+  }
+
+  .mat-mdc-button {
+    color: white !important;
+  }
+}
+

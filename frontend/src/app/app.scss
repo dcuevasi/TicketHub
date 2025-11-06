@@ -1,0 +1,90 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.container {
+  height: calc(100vh - 64px);
+}
+
+.side-drawer {
+  width: 200px !important;
+  min-width: 200px !important;
+  border-radius: 0 !important;
+  padding: 0 5px;
+  
+  ::ng-deep .mat-drawer-inner-container {
+    border-radius: 0 !important;
+  }
+
+  @media (max-width: 768px) {
+    width: 250px !important;
+    min-width: 250px !important;
+  }
+}
+
+.app-content {
+  padding: 1.5rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+}
+
+mat-toolbar {
+  background-color: #84a98c;
+  color:white;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+mat-toolbar button { 
+  color:white;
+}
+
+mat-toolbar span { 
+  margin-left:5px;
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 1rem;
+
+  mat-icon {
+    font-size: 20px;
+  }
+
+  mat-slide-toggle {
+    ::ng-deep .mdc-switch {
+      --mdc-switch-state-layer-size: 0px;
+    }
+
+    ::ng-deep .mdc-switch__ripple {
+      display: none;
+    }
+
+    ::ng-deep .mat-mdc-slide-toggle-ripple {
+      display: none;
+    }
+
+    ::ng-deep .mdc-switch__handle-track {
+      background-color: white;
+    }
+  }
+}
+
+mat-nav-list a.active {
+  background-color: rgba(0, 0, 0, 0.14);
+}
+
+mat-nav-list a {
+  margin-bottom: 10px;
+}
+
+body.dark-theme {
+  mat-nav-list a.active {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}

@@ -1,0 +1,157 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Tickets</mat-card-title>
+    <div class="header-actions">
+      <button mat-raised-button [matMenuTriggerFor]="exportMenu" class="export-btn">
+        <mat-icon>file_download</mat-icon>
+        Exportar a CSV
+      </button>
+      <mat-menu #exportMenu="matMenu">
+        <button mat-menu-item (click)="exportCurrentPage()">
+          <mat-icon>pageview</mat-icon>
+          <span>Exportar Página Actual</span>
+        </button>
+        <button mat-menu-item (click)="exportFiltered()" *ngIf="hasActiveFilters()">
+          <mat-icon>filter_alt</mat-icon>
+          <span>Exportar Filtrados</span>
+        </button>
+        <button mat-menu-item (click)="exportAll()">
+          <mat-icon>dataset</mat-icon>
+          <span>Exportar Todos</span>
+        </button>
+      </mat-menu>
+      
+      <button mat-raised-button color="accent" (click)="openCreateDialog()">
+        <mat-icon>add</mat-icon>
+        Crear Ticket
+      </button>
+      <button mat-raised-button color="primary" (click)="refresh()">
+        <mat-icon>refresh</mat-icon>
+        Actualizar
+      </button>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <!-- Filters Section -->
+    <div class="filters-section">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Buscar</mat-label>
+        <input matInput [(ngModel)]="searchText" (ngModelChange)="onSearchChange()" placeholder="Buscar por título o descripción...">
+        <mat-icon matPrefix>search</mat-icon>
+        <button mat-icon-button matSuffix *ngIf="searchText" (click)="clearSearch()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Estado</mat-label>
+        <mat-select [(ngModel)]="selectedStatus" (ngModelChange)="applyFilters()">
+          <mat-option [value]="null">Todos</mat-option>
+          <mat-option *ngFor="let status of statuses" [value]="status">
+            {{ status | statusLabel }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Prioridad</mat-label>
+        <mat-select [(ngModel)]="selectedPriority" (ngModelChange)="applyFilters()">
+          <mat-option [value]="null">Todas</mat-option>
+          <mat-option *ngFor="let priority of priorities" [value]="priority">
+            {{ priority | statusLabel }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-stroked-button (click)="clearFilters()" *ngIf="hasActiveFilters()" class="clear-filters-btn">
+        <mat-icon>clear_all</mat-icon>
+        Limpiar Filtros
+      </button>
+    </div>
+
+    <app-skeleton-loader 
+      *ngIf="loading" 
+      type="table"
+      @fadeInOut>
+    </app-skeleton-loader>
+
+    <div *ngIf="!loading && tickets.length === 0" class="empty-state" @fadeInOut>
+      <mat-icon class="empty-icon">inbox</mat-icon>
+      <h3>No hay tickets</h3>
+      <p>Crea tu primer ticket para comenzar</p>
+      <button mat-raised-button color="primary" (click)="openCreateDialog()">
+        <mat-icon>add</mat-icon>
+        Crear Ticket
+      </button>
+    </div>
+
+    <table mat-table [dataSource]="tickets" *ngIf="!loading && tickets.length > 0" class="tickets-table" @fadeInOut>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let ticket">{{ ticket.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>Título</th>
+        <td mat-cell *matCellDef="let ticket">{{ ticket.title }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Estado</th>
+        <td mat-cell *matCellDef="let ticket">
+          <span class="status-badge" [class]="'status-' + ticket.status">
+            {{ ticket.status || 'open' | statusLabel }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="priority">
+        <th mat-header-cell *matHeaderCellDef>Prioridad</th>
+        <td mat-cell *matCellDef="let ticket">
+          <span class="priority-badge" [class]="'priority-' + ticket.priority">
+            {{ ticket.priority || 'medium' | statusLabel }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Descripción</th>
+        <td mat-cell *matCellDef="let ticket">
+          <span 
+            class="description-text" 
+            [matTooltip]="ticket.description || ''"
+            [matTooltipDisabled]="!ticket.description || ticket.description.length < 100">
+            {{ ticket.description || '—' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let ticket">
+          <button mat-icon-button color="primary" (click)="openDetailsDialog(ticket)" matTooltip="Ver detalles">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button color="accent" (click)="openEditDialog(ticket)" matTooltip="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteTicket(ticket)" matTooltip="Borrar">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [length]="totalItems"
+      [pageSize]="pageSize"
+      [pageIndex]="currentPage - 1"
+      [pageSizeOptions]="[10, 20, 50]"
+      (page)="onPageChange($event)"
+      showFirstLastButtons
+    ></mat-paginator>
+  </mat-card-content>
+</mat-card>
